@@ -22,9 +22,13 @@ class BreadCrumbView : FrameLayout {
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BreadCrumbView, defStyleAttr, 0)
             val arrowDrawable = typedArray.getResourceId(R.styleable.BreadCrumbView_arrow_drawable, -1)
+            val textColor = typedArray.getColor(R.styleable.BreadCrumbView_bread_crumb_color, -1)
             typedArray.recycle()
-            if (arrowDrawable != -1 && recyclerView?.adapter is BreadCrumbAdapter) {
-                (recyclerView?.adapter as BreadCrumbAdapter).setArrow(arrowDrawable)
+            if (recyclerView?.adapter is BreadCrumbAdapter) {
+                if (arrowDrawable != -1)
+                    (recyclerView?.adapter as BreadCrumbAdapter).setArrow(arrowDrawable)
+                if (textColor != -1)
+                    (recyclerView?.adapter as BreadCrumbAdapter).setTextColor(textColor)
             }
         }
     }
@@ -101,7 +105,7 @@ class BreadCrumbView : FrameLayout {
 
     fun goBack(): Boolean {
         if (recyclerView?.adapter is BreadCrumbAdapter) {
-           return (recyclerView?.adapter as BreadCrumbAdapter).goBack()
+            return (recyclerView?.adapter as BreadCrumbAdapter).goBack()
         }
         return false
     }

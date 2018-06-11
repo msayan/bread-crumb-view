@@ -12,10 +12,11 @@ class BreadCrumbAdapter(private val listener: BreadCrumbView.AdapterClickListene
 
     private var breadCrumbList: MutableList<BreadCrumb>? = null
     private var arrowDrawable: Int = R.drawable.ic_keyboard_arrow_right_black_24dp
+    private var textColor: Int = -1
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bread_crumb, parent, false), arrowDrawable, listener)
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bread_crumb, parent, false), arrowDrawable, listener, textColor)
     }
 
     override fun getItemCount(): Int {
@@ -94,7 +95,12 @@ class BreadCrumbAdapter(private val listener: BreadCrumbView.AdapterClickListene
         return false
     }
 
-    class ViewHolder(itemView: View, val arrowDrawable: Int, val listener: BreadCrumbView.AdapterClickListener) : RecyclerView.ViewHolder(itemView) {
+    fun setTextColor(textColor: Int) {
+        this.textColor = textColor
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder(itemView: View, val arrowDrawable: Int, val listener: BreadCrumbView.AdapterClickListener, textColor: Int) : RecyclerView.ViewHolder(itemView) {
 
         var title: TextView = itemView.findViewById(R.id.crumb_title)
         var image: ImageView = itemView.findViewById(R.id.crumb_image)
@@ -105,6 +111,9 @@ class BreadCrumbAdapter(private val listener: BreadCrumbView.AdapterClickListene
             title.setOnClickListener {
                 listener.onItemClick(it, adapterPosition)
             }
+
+            if (textColor != -1)
+                title.setTextColor(textColor)
 
         }
     }

@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="BreadCrumbView">
         <attr name="arrow_drawable" format="reference|integer" />
+        <attr name="bread_crumb_color" format="color" />
     </declare-styleable>
 
 </resources>
